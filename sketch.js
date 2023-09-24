@@ -9,15 +9,17 @@ let board = [
 let w; // = width / 3;
 let h; // = height / 3;
 
-let ai = 'X';
-let human = 'O';
+let ai = 'AI';
+let human = 'Player';
 let currentPlayer = human;
 
 function setup() {
   createCanvas(400, 400);
   w = width / 3;
   h = height / 3;
-  bestMove();
+  let first = Math.floor(Math.random() * 3);
+  let second = Math.floor(Math.random() * 3);
+  board[first][second] = ai;
 }
 
 function equals3(a, b, c) {
@@ -74,13 +76,15 @@ function mousePressed() {
     if (board[i][j] == '') {
       board[i][j] = human;
       currentPlayer = ai;
-      bestMove();
+      setTimeout(bestMove, 400);
+      
     }
   }
 }
 
 function draw() {
   background(255);
+  stroke(0, 0, 0);
   strokeWeight(4);
 
   line(w, 0, w, height);
@@ -93,14 +97,14 @@ function draw() {
       let x = w * i + w / 2;
       let y = h * j + h / 2;
       let spot = board[i][j];
-      textSize(32);
+      textSize(64);
       let r = w / 4;
       if (spot == human) {
-        noFill();
-        ellipse(x, y, r * 2);
+        textAlign(CENTER, CENTER);
+        text('O', x, y);
       } else if (spot == ai) {
-        line(x - r, y - r, x + r, y + r);
-        line(x + r, y - r, x - r, y + r);
+        textAlign(CENTER, CENTER);
+        text('X', x, y);
       }
     }
   }
@@ -109,11 +113,10 @@ function draw() {
   if (result != null) {
     noLoop();
     let resultP = createP('');
-    resultP.style('font-size', '32pt');
     if (result == 'tie') {
-      resultP.html('Tie!');
+      resultP.html("GAME OVER");
     } else {
-      resultP.html(`${result} wins!`);
+      resultP.html(`... AND THE WINNER IS: ${result} !!!`);
     }
   }
 }
