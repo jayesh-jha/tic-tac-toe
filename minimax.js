@@ -23,8 +23,8 @@ function bestMove() {
 }
 
 let scores = {
-  X: 10,
-  O: -10,
+  AI: 10,
+  Player: -10,
   tie: 0
 };
 
